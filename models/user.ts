@@ -1,24 +1,23 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-      
-      // User.hasMany(models.Todo, {
-      //   foreignKey: "userid",
-      //   // as: "user",
-      // });
-    }
+"use strict";
+import { sequelize } from "../src/db/connection.js";
+import { Model, DataTypes } from "sequelize";
+// export const User = () => {
+class User extends Model {
+  /**
+   * Helper method for defining associations.
+   * This method is not a part of Sequelize lifecycle.
+   * The `models/index` file will call this method automatically.
+   */
+  static associate(models) {
+    // define association here
+    // User.hasMany(models.Todo, {
+    //   foreignKey: "userid",
+    //   // as: "user",
+    // });
   }
-  User.init({
+}
+User.init(
+  {
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -50,9 +49,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-  }, {
+  },
+  {
     sequelize,
-    modelName: 'User',
-  });
-  return User;
-};
+    modelName: "User",
+  }
+);
+export { User };
+// };
