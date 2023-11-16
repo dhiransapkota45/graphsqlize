@@ -29,7 +29,7 @@ app.use(
   express.json(),
   expressMiddleware(server, {
     context: async ({ req }) => ({ token: req.headers.token }),
-  })
+  }) 
 );
 
 await new Promise<void>((resolve) =>

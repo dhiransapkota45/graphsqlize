@@ -14,10 +14,37 @@ export const typeDefs = `#graphql
         completed: Boolean!
         createdAt: String!
         updatedAt: String!
+        userId: ID
+        user : user
+    }
+
+    input userInput {
+        firstname: String!
+        lastname: String!
+        email: String!
+        password: String!
+        phone: String!
+    }
+
+    input todoInput {
+        title: String!
+        description: String!
+        completed: Boolean!
     }
 
     type Query {
         users: [user]
         todos: [todos]
+        user(id: ID!): user
+        todoById(id: ID!): todos
+    }
+
+    type Mutation { 
+        createUser(input: userInput): user
+        updateUser(id: ID!, input: userInput): user
+        deleteUser(id: ID!): user
+        createTodo (input: todoInput): todos
+        updateTodo (id: ID!, input: todoInput): todos
+        deleteTodo (id: ID!): todos
     }
 `;

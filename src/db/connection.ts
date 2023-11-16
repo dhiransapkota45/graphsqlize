@@ -11,7 +11,7 @@ import pg from "pg"
 //   dialectModule : pg
 // });
 
-const sequelize = new Sequelize(
+export const sequelize = new Sequelize(
   process.env.postgres_db,
   process.env.postgres_user,
   process.env.postgres_pass,
