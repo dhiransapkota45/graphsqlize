@@ -31,6 +31,15 @@ export const typeDefs = `#graphql
         description: String!
         completed: Boolean!
     }
+    input loginInput {
+        email: String!
+        password: String!
+    }
+
+    type AuthPayload {
+        token: String
+        user: user
+    }
 
     type Query {
         users: [user]
@@ -46,5 +55,6 @@ export const typeDefs = `#graphql
         createTodo (input: todoInput): todos
         updateTodo (id: ID!, input: todoInput): todos
         deleteTodo (id: ID!): todos
+        login (input: loginInput): AuthPayload
     }
 `;

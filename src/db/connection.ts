@@ -1,26 +1,18 @@
 import { Sequelize } from "sequelize";
-import pg from "pg"
-
-// const sequelize = new Sequelize({
-//   dialect: "postgres",
-//   host: "your_postgres_container",
-//   port: 5432,
-//   password: "password",
-//   username: "dhiran",
-//   database: "dhiran",
-//   dialectModule : pg
-// });
+// import pg from "pg";
 
 export const sequelize = new Sequelize(
-  process.env.postgres_db,
-  process.env.postgres_user,
-  process.env.postgres_pass,
+  process.env.postgres_db || "Graphql",
+  process.env.postgres_user || "postgres",
+  process.env.postgres_pass || "admin",
   {
-    host: process.env.postgres_host,
+    host: process.env.postgres_host || "localhost",
     dialect: "postgres",
-    dialectModule : pg
+    //this is used when the default postgres driver given by sequelize is not enough
+    //i was using it beacuse it is causing some error while running on docker
+    // dialectModule : pg
   }
-  );
+);
 
 try {
   await sequelize.authenticate();
