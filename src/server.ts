@@ -9,6 +9,8 @@ import cors from "cors";
 import { typeDefs } from "./graphql/typedef.js";
 import { resolvers } from "./graphql/resolver.js";
 
+import "./db/connection.js"
+
 interface MyContext {
   token?: String;
 }
