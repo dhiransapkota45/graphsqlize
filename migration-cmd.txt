@@ -1,1 +1,1 @@
-explain query interface and seqlize, up and down(undo and migrate), transaction creation necessity, migraiton storage, umzug
+explain query interface and seqlize, up and down(undo and migrate), transaction creation necessity, migraiton storage, umzug, add migration cmds to package.json
