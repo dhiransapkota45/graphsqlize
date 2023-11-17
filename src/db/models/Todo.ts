@@ -3,7 +3,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../connection.js";
 import { User } from "./User.js";
 
-const Todo = sequelize.define("Todo", {
+export const Todo = sequelize.define("todo", {
   title: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -17,7 +17,17 @@ const Todo = sequelize.define("Todo", {
   },
   priority: {
     type: DataTypes.ENUM("low", "medium", "high"),
-    defaultValue: "low",
+    defaultValue: "high",
+  },
+  userid: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: {
+        tableName: "user",
+        schema: "public",
+      },
+    },
+    key: "id",
   },
 });
 

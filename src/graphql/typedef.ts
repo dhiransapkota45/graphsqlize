@@ -1,10 +1,12 @@
 export const typeDefs = `#graphql
     type user {
-        firstname: String!
-        lastname: String!
+        firstName: String!
+        lastName: String!
         email: String!
         password: String!
         phone: String!
+        userName: String!
+        
     }
 
     type todos {
@@ -19,11 +21,12 @@ export const typeDefs = `#graphql
     }
 
     input userInput {
-        firstname: String!
-        lastname: String!
+        firstName: String!
+        lastName: String!
         email: String!
         password: String!
         phone: String!
+        userName: String!
     }
 
     input todoInput {

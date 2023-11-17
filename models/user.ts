@@ -1,22 +1,15 @@
 "use strict";
-import { sequelize } from "../src/db/connection.js";
+
 import { Model, DataTypes } from "sequelize";
-// export const User = () => {
-class User extends Model {
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
+import { sequelize } from "../src/db/connection.js";
+
+// module.exports = () => {
+class user extends Model {
   static associate(models) {
     // define association here
-    // User.hasMany(models.Todo, {
-    //   foreignKey: "userid",
-    //   // as: "user",
-    // });
   }
 }
-User.init(
+user.init(
   {
     firstName: {
       type: DataTypes.STRING,
@@ -45,15 +38,10 @@ User.init(
     profilePic: {
       type: DataTypes.STRING,
     },
-    bio: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
   },
   {
     sequelize,
-    modelName: "User",
+    modelName: "user",
   }
 );
-export { User };
-// };
+export { user };

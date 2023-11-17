@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 // import pg from "pg";
 
 export const sequelize = new Sequelize(
-  process.env.postgres_db || "Graphql",
+  process.env.postgres_db || "nepal",
   process.env.postgres_user || "postgres",
   process.env.postgres_pass || "admin",
   {
