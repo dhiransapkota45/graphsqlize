@@ -1,13 +1,15 @@
 import { todo } from "../../models/todo.js";
 import { user } from "../../models/user.js";
-import { createUser, login } from "../controllers/User.js";
-// import { todo } from "../../models/todo.js";
+import { createUser, login, getAllUsers } from "../controllers/User.js";
 
 export const resolvers = {
   Query: {
-    users: async () => {
-      const users = await user.findAll();
-      return users;
+    users: async (parent, args, context, info) => {
+      if (context?.token?.id) {
+        return getAllUsers();
+      } else {
+        throw new Error("You are not authorized to view this page");
+      }
     },
     todos: async () => {
       // return await todo.findAll();

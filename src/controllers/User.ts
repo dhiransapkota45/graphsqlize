@@ -2,7 +2,14 @@ import { user } from "../../models/user.js";
 import jwt from "jsonwebtoken";
 import { GraphQLError } from "graphql";
 
-export const getAllUsers = async (body) => {};
+export const getAllUsers = async () => {
+  try {
+    const users = await user.findAll();
+    return users;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
 export const createUser = async (body) => {
   try {

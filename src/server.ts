@@ -39,19 +39,12 @@ app.use(
             id: string;
             userName: string;
           };
-
-          const isUserExist = await user.findOne({
-            where: { id: decoded.id },
-          });
-
-          if (!isUserExist) throw new Error("User not found");
-
-          return { user: isUserExist };
+          return { token: decoded };
         } else {
-          return { user: null };
+          return { token: null };
         }
       } catch (error) {
-        throw new Error(error);
+        throw new Error("You are not authorized to view this page");
       }
     },
   })
