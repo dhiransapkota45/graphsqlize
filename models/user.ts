@@ -7,6 +7,9 @@ import { sequelize } from "../src/db/connection.js";
 class user extends Model {
   static associate(models) {
     // define association here
+    user.hasMany(models.todo, {
+      as: "todos",
+    });
   }
 }
 user.init(
