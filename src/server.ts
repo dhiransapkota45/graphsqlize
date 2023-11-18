@@ -10,6 +10,7 @@ import { resolvers } from "./graphql/resolver.js";
 import jwt from "jsonwebtoken";
 
 import "./db/connection.js";
+import { user } from "../models/user.js";
 
 const tokensecret: string = "secretkey";
 
@@ -31,12 +32,26 @@ app.use(
   express.json(),
   expressMiddleware(server, {
     context: async ({ req }) => {
-      if (req?.headers?.token) {
-        const token = req.headers.token;
-        const decoded = jwt.verify(token.toString(), tokensecret);
-        return { token: decoded };
-      } else {
-        return { token: null };
+      try {
+        if (req?.headers?.token) {
+          const token = req.headers.token;
+          const decoded = jwt.verify(token.toString(), tokensecret) as {
+            id: string;
+            userName: string;
+          };
+
+          const isUserExist = await user.findOne({
+            where: { id: decoded.id },
+          });
+
+          if (!isUserExist) throw new Error("User not found");
+
+          return { user: isUserExist };
+        } else {
+          return { user: null };
+        }
+      } catch (error) {
+        throw new Error(error);
       }
     },
   })

@@ -1,5 +1,6 @@
 import { todo } from "../../models/todo.js";
 import { user } from "../../models/user.js";
+import { createUser, login } from "../controllers/User.js";
 // import { todo } from "../../models/todo.js";
 
 export const resolvers = {
@@ -14,15 +15,10 @@ export const resolvers = {
   },
   Mutation: {
     async createUser(_, args) {
-      const newUser = await user.create({
-        firstName: args.input.firstName,
-        lastName: args.input.lastName,
-        email: args.input.email,
-        password: args.input.password,
-        phone: args.input.phone,
-        userName: args.input.userName,
-      });
-      return newUser;
+      return createUser(args.input);
+    },
+    async login(_, args) {
+      return login(args.input);
     },
     async createTodo(_, args) {
       return await todo.create({

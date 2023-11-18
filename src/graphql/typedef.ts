@@ -3,10 +3,12 @@ export const typeDefs = `#graphql
         firstName: String!
         lastName: String!
         email: String!
-        password: String!
         phone: String!
         userName: String!
-        
+        id: ID!
+        createdAt: String!
+        updatedAt: String!
+        profilePic: String
     }
 
     type todos {
@@ -35,7 +37,7 @@ export const typeDefs = `#graphql
         completed: Boolean!
     }
     input loginInput {
-        email: String!
+        userName: String!
         password: String!
     }
 
@@ -52,7 +54,7 @@ export const typeDefs = `#graphql
     }
 
     type Mutation { 
-        createUser(input: userInput): user
+        createUser(input: userInput): AuthPayload
         updateUser(id: ID!, input: userInput): user
         deleteUser(id: ID!): user
         createTodo (input: todoInput): todos
