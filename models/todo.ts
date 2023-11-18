@@ -4,7 +4,7 @@ import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../src/db/connection.js";
 import { user } from "./user.js";
 
-const todo = sequelize.define("todo", {
+const todo = sequelize.define("todos", {
   title: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -25,7 +25,7 @@ const todo = sequelize.define("todo", {
 
 todo.belongsTo(user, {
   foreignKey: "userid",
-  as: "user",
+  as: "users",
 });
 
 export { todo };

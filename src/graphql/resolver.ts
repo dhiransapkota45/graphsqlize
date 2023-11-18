@@ -1,18 +1,23 @@
 import { todo } from "../../models/todo.js";
 import { user } from "../../models/user.js";
+import { createTodo, getAllTodos } from "../controllers/Todo.js";
 import { createUser, login, getAllUsers } from "../controllers/User.js";
 
 export const resolvers = {
   Query: {
-    users: async (parent, args, context, info) => {
+    users: (parent, args, context, info) => {
       if (context?.token?.id) {
         return getAllUsers();
       } else {
-        throw new Error("You are not authorized to view this page");
+        throw new Error("You are not authorized to perform this action");
       }
     },
-    todos: async () => {
-      // return await todo.findAll();
+    todos: (parent, args, context, info) => {
+      if (context?.token?.id) {
+        return getAllTodos();
+      } else {
+        throw new Error("You are not authorized to perform this action");
+      }
     },
   },
   Mutation: {
@@ -22,13 +27,12 @@ export const resolvers = {
     async login(_, args) {
       return login(args.input);
     },
-    async createTodo(_, args) {
-      return await todo.create({
-        title: args.input.title,
-        description: args.input.description,
-        completed: args.input.completed,
-        userid: args.input.userid,
-      });
+    async createTodo(_, args, context, info) {
+      if (context?.token?.id) {
+        return createTodo(args.input, context?.token?.id);
+      } else {
+        throw new Error("You are not authorized to perform this action");
+      }
     },
   },
 };
