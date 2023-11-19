@@ -1,6 +1,6 @@
 "use strict";
 
-import { Model, DataTypes } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../src/db/connection.js";
 import { user } from "./user.js";
 
@@ -17,15 +17,19 @@ const todo = sequelize.define("todos", {
     allowNull: false,
     defaultValue: false,
   },
-  userid:{
+  userid: {
     type: DataTypes.INTEGER,
+    references: {
+      model: user,
+      key: "id",
+    },
     allowNull: false,
-  }
+  },
 });
 
 todo.belongsTo(user, {
   foreignKey: "userid",
-  as: "users",
+  as: "users", // this determines the name in `associations`!
 });
 
 export { todo };

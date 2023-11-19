@@ -18,8 +18,8 @@ export const typeDefs = `#graphql
         completed: Boolean!
         createdAt: String!
         updatedAt: String!
-        userId: ID
-        user : user
+        userid: ID
+        users : user
     }
 
     input userInput {
@@ -53,13 +53,18 @@ export const typeDefs = `#graphql
         todoById(id: ID!): todos
     }
 
+    type updateresponse{
+        success: Boolean!
+        message: String!
+    }
+
     type Mutation { 
         createUser(input: userInput): AuthPayload
         updateUser(id: ID!, input: userInput): user
         deleteUser(id: ID!): user
         createTodo (input: todoInput): todos
-        updateTodo (id: ID!, input: todoInput): todos
-        deleteTodo (id: ID!): todos
+        updateTodo (id: ID!, input: todoInput): updateresponse
+        deleteTodo (id: ID!): updateresponse
         login (input: loginInput): AuthPayload
     }
 `;
