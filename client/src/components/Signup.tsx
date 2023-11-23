@@ -1,4 +1,12 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 const Signup = () => {
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+  const navigate = useNavigate();
   return (
     <div>
       {/* create a sign up page */}
@@ -8,15 +16,19 @@ const Signup = () => {
           <form>
             <div className="mb-5">
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="block mb-2 text-sm font-medium text-gray-600"
               >
-                Email
+                Username
               </label>
               <input
-                type="email"
-                name="email"
-                id="email"
+                onChange={(e) =>
+                  setCredentials({ ...credentials, username: e.target.value })
+                }
+                value={credentials.username}
+                type="text"
+                name="username"
+                id="username"
                 placeholder="Your Email"
                 className="border w-full p-3 rounded outline-none focus:ring-2 focus:ring-blue-600"
               />
@@ -29,6 +41,10 @@ const Signup = () => {
                 Password
               </label>
               <input
+                onChange={(e) =>
+                  setCredentials({ ...credentials, password: e.target.value })
+                }
+                value={credentials.password}
                 type="password"
                 name="password"
                 id="password"
@@ -44,7 +60,7 @@ const Signup = () => {
             </button>
 
             {/* create a url to sign in page here saying dont have a account?signin */}
-            <p className="text-left text-sm text-gray-500 mt-3 hover:text-blue-600 cursor-pointer">
+            <p onClick={()=>navigate("/login")} className="text-left text-sm text-gray-500 mt-3 hover:text-blue-600 cursor-pointer">
               Already have an account? Sign In
             </p>
           </form>
