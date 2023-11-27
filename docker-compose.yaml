@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  graph-project:
+    container_name: graph-project
+    image: graphprotocol/graph-node
+    ports:
+      - 4000:4000
+    environment:
+      postgres_host: graph-node-postgres
+      postgres_user: dhiran
+      postgres_pass: password
+      postgres_db: dhiran
+    depends_on:
+      - graph-node-postgres
+    restart: always
+  
+  graph-node-postgres:
+    container_name: graph-node-postgres
+    image: postgres:12
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: dhiran
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dhiran
+    volumes:
+      - postgres-vol:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  postgres-vol: {}
