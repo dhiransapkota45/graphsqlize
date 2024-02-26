@@ -19,3 +19,12 @@ export const CREATETODO = gql`
     }
   }
 `
+
+export const DELETETODO = gql`
+mutation DeleteTodo($deleteTodoId: ID!) {
+  deleteTodo(id: $deleteTodoId) {
+    message
+    success  
+  }
+}
+`

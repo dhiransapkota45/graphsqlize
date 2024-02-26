@@ -4,6 +4,7 @@ export const GETALLTODO = gql`
 query Todos {
     todos {
       title
+      id
     }
   }
 `

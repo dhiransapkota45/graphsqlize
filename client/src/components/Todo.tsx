@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { GETALLTODO } from "../grapql/query";
-import { CREATETODO } from "../grapql/mutation";
+import { CREATETODO, DELETETODO } from "../grapql/mutation";
 
 const Todo = () => {
   const [addtodo, setAddtodo] = useState("");
@@ -19,6 +19,16 @@ const Todo = () => {
           completed: true,
           description: "this is description",
         },
+      },
+    });
+  };
+  const [deleteTodo] = useMutation(DELETETODO, {
+    refetchQueries: [{ query: GETALLTODO }],
+  });
+  const deleteTodoHandler = async (id: string) => {
+    await deleteTodo({
+      variables: {
+        deleteTodoId: id,
       },
     });
   };
@@ -72,6 +82,7 @@ const Todo = () => {
                   <li className="flex items-center justify-between bg-gray-100 mb-2 py-2 px-4">
                     <span className="text-lg">{todo?.title}</span>
                     <button
+                      onClick={() => deleteTodoHandler(todo?.id)}
                       className="flex-shrink-0 bg-red-500 hover:bg-red-700 border-red-500 hover:border-red-700 text-sm border-4 text-white py-1 px-2 rounded"
                       type="button"
                     >
