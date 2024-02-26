@@ -14,13 +14,25 @@ const Login = () => {
   const [login] = useMutation(LOGIN);
 
   const submitHandler = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const response = await login({
-      variables: {
-        loginInput: credentials,
-      },
-    });
-    console.log(response, "response");
+    try {
+      event.preventDefault();
+      const response = await login({
+        variables: {
+          loginInput: credentials,
+        },
+      });
+      if (response?.data) {
+        localStorage.setItem("token", response?.data?.login?.token);
+        localStorage.setItem(
+          "refresh_token",
+          response?.data?.login?.refresh_token
+        );
+
+        location.href = "/todo";
+      }
+    } catch (error) {
+      console.log("error occured", error);
+    }
   };
   return (
     <div className="flex justify-center items-center h-screen">

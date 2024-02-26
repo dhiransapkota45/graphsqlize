@@ -29,11 +29,25 @@ export const createUser = async (body) => {
         id: newUser.id,
         userName: newUser.userName,
       },
-      process.env.TOKEN_SECRET || "secretkey"
+      process.env.TOKEN_SECRET || "secretkey",
+      {
+        expiresIn: "60"
+      }
     );
 
+    const refresh_token = jwt.sign(
+      {
+        id: newUser.id,
+        userName: newUser.userName,
+      },
+      process.env.TOKEN_SECRET || "secretkey",
+      {
+        expiresIn: "120"
+      }
+    );
     return {
       token: token,
+      refresh_token: refresh_token,
       user: newUser?.dataValues,
     };
   } catch (error) {
@@ -66,14 +80,31 @@ export const login = async (body) => {
 
     const token = jwt.sign(
       {
-        id: isUserExist?.id,
-        userName: isUserExist?.userName,
+        id: isUserExist.id,
+        userName: isUserExist.userName,
       },
-      process.env.TOKEN_SECRET || "secretkey"
+      process.env.TOKEN_SECRET || "secretkey",
+      {
+        expiresIn: "24h"
+      }
     );
 
+    const refresh_token = jwt.sign(
+      {
+        id: isUserExist.id,
+        userName: isUserExist.userName,
+      },
+      process.env.TOKEN_SECRET || "secretkey",
+      {
+        expiresIn: "24h"
+      }
+    );
+
+    console.log(refresh_token)
+    
     return {
       token: token,
+      refresh_token: refresh_token,
       user: isUserExist?.dataValues,
     };
   } catch (error) {

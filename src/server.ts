@@ -35,10 +35,12 @@ app.use(
       try {
         if (req?.headers?.token) {
           const token = req.headers.token;
+          console.log("Hi")
           const decoded = jwt.verify(token.toString(), tokensecret) as {
             id: string;
             userName: string;
           };
+          console.log(decoded)
           return { token: decoded };
         } else {
           return { token: null };

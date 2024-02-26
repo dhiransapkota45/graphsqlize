@@ -44,6 +44,7 @@ export const typeDefs = `#graphql
     type AuthPayload {
         token: String
         user: user
+        refresh_token : String
     }
 
     type Query {
