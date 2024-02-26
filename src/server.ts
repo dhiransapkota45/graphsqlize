@@ -11,6 +11,7 @@ import jwt from "jsonwebtoken";
 
 import "./db/connection.js";
 import { user } from "../models/user.js";
+import { GraphQLError } from "graphql";
 
 const tokensecret: string = "secretkey";
 
@@ -46,7 +47,11 @@ app.use(
           return { token: null };
         }
       } catch (error) {
-        throw new Error("You are not authorized to view this page");
+        throw new GraphQLError("You are not authorized to view this page", {
+          extensions: {
+            statusCode: 403
+          }
+        });
       }
     },
   })

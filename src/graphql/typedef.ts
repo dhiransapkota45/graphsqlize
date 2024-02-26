@@ -59,6 +59,14 @@ export const typeDefs = `#graphql
         message: String!
     }
 
+    input refreshTokenPayload{
+        refresh_token : String 
+    }
+
+    type refreshTokenResponse {
+        token : String
+    }
+
     type Mutation { 
         createUser(input: userInput): AuthPayload
         updateUser(id: ID!, input: userInput): user
@@ -67,5 +75,6 @@ export const typeDefs = `#graphql
         updateTodo (id: ID!, input: todoInput): updateresponse
         deleteTodo (id: ID!): updateresponse
         login (input: loginInput): AuthPayload
+        refresh (input: refreshTokenPayload!): refreshTokenResponse
     }
 `;

@@ -101,7 +101,7 @@ export const login = async (body) => {
     );
 
     console.log(refresh_token)
-    
+
     return {
       token: token,
       refresh_token: refresh_token,
@@ -111,3 +111,25 @@ export const login = async (body) => {
     throw new Error(error);
   }
 };
+
+
+export const refreshToken = async (refreshToken, user) => {
+  try {
+    const verifyRefreshToken = jwt.verify(refreshToken?.refresh_token, process.env.TOKEN_SECRET || "secretkey")
+    if (verifyRefreshToken && user) {
+      const token = jwt.sign(
+        {
+          id: user?.id,
+          userName: user?.userName,
+        },
+        process.env.TOKEN_SECRET || "secretkey",
+        {
+          expiresIn: "60"
+        }
+      );
+      return { token }
+    }
+  } catch (error) {
+    throw new GraphQLError(error)
+  }
+}
