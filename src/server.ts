@@ -10,7 +10,6 @@ import { resolvers } from "./graphql/resolver.js";
 import jwt from "jsonwebtoken";
 
 import "./db/connection.js";
-import { user } from "../models/user.js";
 import { GraphQLError } from "graphql";
 
 const tokensecret: string = "secretkey";
@@ -20,6 +19,8 @@ interface MyContext {
 }
 
 const app = express();
+
+
 const httpServer = http.createServer(app);
 const server = new ApolloServer<MyContext>({
   typeDefs,
@@ -56,6 +57,37 @@ app.use(
     },
   })
 );
+
+app.use(cors())
+app.use(express.json())
+app.post("/refresh", (req, res) => {
+  const { refreshToken } = req.body
+  console.log(refreshToken)
+  if (!refreshToken) {
+    return res.status(403).json({ message: "Invalid refresh token" })
+  }
+  try {
+    const verifyRefreshToken: any = jwt.verify(refreshToken, process.env.TOKEN_SECRET || "secretkey")
+    if (!verifyRefreshToken) {
+      return res.status(403).json({ message: "authentication failed" })
+    }
+    const token = jwt.sign(
+      {
+        id: verifyRefreshToken?.id,
+        userName: verifyRefreshToken?.userName,
+      },
+      process.env.TOKEN_SECRET || "secretkey",
+      {
+        expiresIn: "10s"
+      }
+    );
+
+    return res.json({ token })
+  } catch (error) {
+    return res.status(403).json({ message: "authentication failed" })
+  }
+
+})
 
 await new Promise<void>((resolve) =>
   httpServer.listen({ port: 4000 }, resolve)

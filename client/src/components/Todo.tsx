@@ -10,6 +10,7 @@ const Todo = () => {
   const [createTodo] = useMutation(CREATETODO, {
     refetchQueries: [{ query: GETALLTODO }],
   });
+  
   const submitHandler = async (e: any) => {
     e.preventDefault();
     await createTodo({

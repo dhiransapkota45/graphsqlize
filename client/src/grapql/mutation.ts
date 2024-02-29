@@ -28,3 +28,12 @@ mutation DeleteTodo($deleteTodoId: ID!) {
   }
 }
 `
+
+
+export const REFRESHTOKEN = gql`
+mutation Refresh($input: refreshTokenPayload!) {
+  refresh(input: $input) {
+    token
+  }
+}
+`

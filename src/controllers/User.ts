@@ -31,7 +31,7 @@ export const createUser = async (body) => {
       },
       process.env.TOKEN_SECRET || "secretkey",
       {
-        expiresIn: "60"
+        expiresIn: "10s"
       }
     );
 
@@ -42,7 +42,7 @@ export const createUser = async (body) => {
       },
       process.env.TOKEN_SECRET || "secretkey",
       {
-        expiresIn: "120"
+        expiresIn: "20s"
       }
     );
     return {
@@ -85,7 +85,7 @@ export const login = async (body) => {
       },
       process.env.TOKEN_SECRET || "secretkey",
       {
-        expiresIn: "24h"
+        expiresIn: "10s"
       }
     );
 
@@ -96,7 +96,7 @@ export const login = async (body) => {
       },
       process.env.TOKEN_SECRET || "secretkey",
       {
-        expiresIn: "24h"
+        expiresIn: "20s"
       }
     );
 
@@ -113,23 +113,23 @@ export const login = async (body) => {
 };
 
 
-export const refreshToken = async (refreshToken, user) => {
-  try {
-    const verifyRefreshToken = jwt.verify(refreshToken?.refresh_token, process.env.TOKEN_SECRET || "secretkey")
-    if (verifyRefreshToken && user) {
-      const token = jwt.sign(
-        {
-          id: user?.id,
-          userName: user?.userName,
-        },
-        process.env.TOKEN_SECRET || "secretkey",
-        {
-          expiresIn: "60"
-        }
-      );
-      return { token }
-    }
-  } catch (error) {
-    throw new GraphQLError(error)
-  }
-}
+// export const refreshToken = async (refreshToken, user) => {
+//   try {
+//     const verifyRefreshToken = jwt.verify(refreshToken?.refresh_token, process.env.TOKEN_SECRET || "secretkey")
+//     if (verifyRefreshToken && user) {
+//       const token = jwt.sign(
+//         {
+//           id: user?.id,
+//           userName: user?.userName,
+//         },
+//         process.env.TOKEN_SECRET || "secretkey",
+//         {
+//           expiresIn: "60"
+//         }
+//       );
+//       return { token }
+//     }
+//   } catch (error) {
+//     throw new GraphQLError(error)
+//   }
+// }

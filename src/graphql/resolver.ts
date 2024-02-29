@@ -6,7 +6,7 @@ import {
   getAllTodos,
   updateTodo,
 } from "../controllers/Todo.js";
-import { createUser, login, getAllUsers, refreshToken } from "../controllers/User.js";
+import { createUser, login, getAllUsers } from "../controllers/User.js";
 
 export const resolvers = {
   Query: {
@@ -54,13 +54,13 @@ export const resolvers = {
         throw new Error("You are not authorized to perform this action");
       }
     },
-    async refresh(_, args, context, info) {
-      if (context?.token?.id) {
-        return refreshToken(args?.input, context?.token?.id);
-      } else {
-        throw new Error("You are not authorized to perform this action");
-      }
-    },
+    // async refresh(_, args, context, info) {
+    //   if (context?.token?.id) {
+    //     return refreshToken(args?.input, context?.token?.id);
+    //   } else {
+    //     throw new Error("You are not authorized to perform this action");
+    //   }
+    // },
 
   },
 };
